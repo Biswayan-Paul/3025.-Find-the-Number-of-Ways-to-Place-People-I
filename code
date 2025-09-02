@@ -1,0 +1,32 @@
+#Code
+from typing import List
+
+class Solution:
+    def numberOfPairs(self, points: List[List[int]]) -> int:
+        n = len(points)
+        count = 0
+        
+        for i in range(n):
+            Ax, Ay = points[i]
+            for j in range(n):
+                if i == j:
+                    continue
+                Bx, By = points[j]
+                
+                # A is upper-left or on same row/column as B
+                if Ax <= Bx and Ay >= By:
+                    empty = True
+                    for k in range(n):
+                        if k == i or k == j:
+                            continue
+                        Px, Py = points[k]
+                        
+                        # Check if P is inside the rectangle including borders
+                        if Ax <= Px <= Bx and By <= Py <= Ay:
+                            empty = False
+                            break
+                    
+                    if empty:
+                        count += 1
+        
+        return count
